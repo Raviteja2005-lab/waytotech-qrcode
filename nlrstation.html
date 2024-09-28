@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Custom Nellore Railway Station Map</title>
+    <style>
+      #map {
+        height: 600px;
+        width: 100%;
+      }
+      .background{
+        background-color: black;
+      }
+      .background h1{
+        color: orange;
+      }
+    </style>
+    <script>
+      // Initialize and add the map
+      function initMap() {
+        // The location of Nellore Railway Station (set your exact coordinates)
+        const nelloreStation = { lat: 14.4615474, lng:79.9900396};
+
+        // Create the map, centered at Nellore Railway Station
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 19,
+          center: nelloreStation,
+        });
+
+        // Add markers for different features
+        const features = [
+          {
+            position: { lat: 14.4612706, lng:79.9900154 },
+            type: "platform 4",
+            title: "platform 4"
+          },
+          {
+            position: { lat:14.461774, lng: 79.9898814},
+            type: "east_gate",
+            title: "East Gate"
+          },
+          {
+            position: { lat:14.4617573, lng:79.9895557 },
+            type: "west_gate",
+            title: "West Gate"
+          },
+          {
+            position: { lat:14.461636 , lng: 79.989557 },
+            type: "wash_room",
+            title: "Washroom"
+          },
+          {
+            position: { lat:14.4615485 , lng: 79.989486 },
+            type: "ticket_counter",
+            title: "Ticket Counter"
+          }
+        ];
+
+        // Loop through the features and place markers
+        features.forEach(feature => {
+          const marker = new google.maps.Marker({
+            position: feature.position,
+            map: map,
+            title: feature.title,
+            icon: {
+              url: getIconUrl(feature.type),
+              scaledSize: new google.maps.Size(30, 30),
+            },
+          });
+        });
+
+        // Function to get different icons based on the type of place
+        function getIconUrl(type) {
+          switch (type) {
+            case "wash_room":
+              return "https://maps.google.com/mapfiles/ms/icons/blue-dot.png"; // Shop icon
+            case "east_gate":
+              return "https://maps.google.com/mapfiles/ms/icons/red-dot.png"; // Ticket counter icon
+            case "west_gate":
+              return "https://maps.google.com/mapfiles/ms/icons/red-dot.png"; // Washroom icon
+            case "ticket_counter":
+              return "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
+            default:
+              return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+          }
+        }
+      }
+    </script>
+  </head>
+  <body class="background">
+    <h1 class="name">Nellore Railway Station Map</h1>
+    <!-- The div where the map will be rendered -->
+    <div id="map"></div>
+
+    <!-- Load the Google Maps API script with your API key -->
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYkAY-_8a_bcKaSB3TUBY5_K1Gf6-2MLo&callback=initMap">
+    </script>
+  </body>
+</html>
